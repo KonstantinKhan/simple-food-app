@@ -1,0 +1,145 @@
+openapi: 3.0.3
+info:
+  title: Simple Food API - Measures
+  version: 0.1.0-draft
+  description: Measure entities specification
+servers: []
+paths:
+  /measures:
+    get:
+      operationId: listMeasures
+      summary: List measures
+      description: Get all measures with translations. Optionally filter by locale.
+      tags: [Measures]
+      parameters:
+        - name: locale
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter measures that have translations in this locale
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Search in measure codes and translations
+      responses:
+        '200':
+          description: List of measures
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './spec-simple-food-common.yaml#/components/schemas/MeasureDetail'
+    post:
+      operationId: createMeasure
+      summary: Create measure
+      tags: [Measures]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './spec-simple-food-common.yaml#/components/schemas/MeasureDetailCreateRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: './spec-simple-food-common.yaml#/components/schemas/MeasureDetail'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: './spec-simple-food-common.yaml#/components/schemas/Error'
+  /measures/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Measure ID
+    get:
+      operationId: getMeasureById
+      summary: Get measure by id
+      tags: [Measures]
+      responses:
+        '200':
+          description: Measure with all translations
+          content:
+            application/json:
+              schema:
+                $ref: './spec-simple-food-common.yaml#/components/schemas/MeasureDetail'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: './spec-simple-food-common.yaml#/components/schemas/Error'
+    put:
+      operationId: updateMeasure
+      summary: Update measure
+      tags: [Measures]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './spec-simple-food-common.yaml#/components/schemas/MeasureDetail'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: './spec-simple-food-common.yaml#/components/schemas/MeasureDetail'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: './spec-simple-food-common.yaml#/components/schemas/Error'
+    delete:
+      operationId: deleteMeasure
+      summary: Delete measure
+      tags: [Measures]
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: './spec-simple-food-common.yaml#/components/schemas/Error'
+  /measures/by-code/{code}:
+    parameters:
+      - name: code
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Measure code (e.g., GRAM, KILOGRAM)
+    get:
+      operationId: getMeasureByCode
+      summary: Get measure by code
+      tags: [Measures]
+      responses:
+        '200':
+          description: Measure with all translations
+          content:
+            application/json:
+              schema:
+                $ref: './spec-simple-food-common.yaml#/components/schemas/MeasureDetail'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: './spec-simple-food-common.yaml#/components/schemas/Error'

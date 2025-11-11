@@ -1,0 +1,158 @@
+openapi: 3.0.3
+info:
+  title: Simple Food API - Common
+  version: 0.1.0-draft
+  description: Common reusable schemas for Simple Food API
+servers: []
+components:
+  schemas:
+    Measure:
+      type: object
+      description: Measurement unit for weights/amounts (single translation)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the measure
+        code:
+          type: string
+          description: Unique code for the measure (e.g., GRAM, KILOGRAM)
+        measureName:
+          type: string
+          description: Full name of the measurement unit (in requested locale)
+        measureShortName:
+          type: string
+          description: Short abbreviation of the measurement unit (in requested locale)
+      required: [id, code, measureName, measureShortName]
+
+    MeasureTranslation:
+      type: object
+      description: Translation of a measure in a specific locale
+      properties:
+        locale:
+          type: string
+          description: Locale code (e.g., en, ru, fr)
+        measureName:
+          type: string
+          description: Full name in this locale
+        measureShortName:
+          type: string
+          description: Short abbreviation in this locale
+      required: [locale, measureName, measureShortName]
+
+    MeasureDetail:
+      type: object
+      description: Complete measure with all translations
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the measure
+        code:
+          type: string
+          description: Unique code for the measure (e.g., GRAM, KILOGRAM)
+        translations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasureTranslation'
+          description: All available translations
+      required: [id, code, translations]
+
+    MeasureDetailCreateRequest:
+      type: object
+      description: Request to create a new measure (ID generated server-side)
+      properties:
+        code:
+          type: string
+          description: Unique code for the measure (e.g., GRAM, KILOGRAM)
+        translations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeasureTranslation'
+          description: All available translations
+      required: [ code, translations ]
+
+    Weight:
+      type: object
+      description: Quantity with measurement unit
+      properties:
+        weightValue:
+          type: number
+          format: float
+        measure:
+          $ref: '#/components/schemas/Measure'
+      required: [weightValue, measure]
+
+    Error:
+      type: object
+      description: Standard error object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+      required: [code, message]
+
+    Author:
+      type: object
+      description: Author of the entity or request initiator
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+      required: [id]
+
+    NutritionalValue:
+      type: object
+      description: Nutritional value with title and measurement
+      properties:
+        title:
+          type: string
+          description: Full title of the nutritional value
+        shortTitle:
+          type: string
+          description: Short abbreviation of the nutritional value
+        nutritionalValue:
+          type: number
+          format: float
+          description: The nutritional value amount
+        measure:
+          $ref: '#/components/schemas/Measure'
+      required: [title, shortTitle, nutritionalValue, measure]
+
+    BaseRequest:
+      type: object
+      description: Base request envelope for API operations
+      properties:
+        requestId:
+          type: string
+          format: uuid
+        timestamp:
+          type: string
+          format: date-time
+        author:
+          $ref: '#/components/schemas/Author'
+      required: [requestId, timestamp]
+
+    BaseResponse:
+      type: object
+      description: Base response envelope for API operations
+      properties:
+        requestId:
+          type: string
+          format: uuid
+        success:
+          type: boolean
+        error:
+          $ref: '#/components/schemas/Error'
+      required: [requestId, success]
+
+

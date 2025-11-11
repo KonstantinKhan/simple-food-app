@@ -1,0 +1,41 @@
+openapi: 3.0.3
+info:
+  title: Simple Food API - Common Schemas
+  version: 0.1.0-draft
+  description: Common and base entities reused across Simple Food API specs
+tags:
+  - name: Products
+    description: Product resources
+  - name: Dishes
+    description: Dish resources
+  - name: Measures
+    description: Measurement unit resources
+servers: []
+paths:
+  /products:
+    $ref: 'spec-simple-food-api-products.yaml#/paths/~1products'
+  /products/{id}:
+    $ref: 'spec-simple-food-api-products.yaml#/paths/~1products~1{id}'
+  /products/search:
+    $ref: 'spec-simple-food-api-products.yaml#/paths/~1products~1search'
+  /dishes:
+    $ref: 'spec-simple-food-api-dishes.yaml#/paths/~1dishes'
+  /dishes/{id}:
+    $ref: 'spec-simple-food-api-dishes.yaml#/paths/~1dishes~1{id}'
+  /dishes/search:
+    $ref: 'spec-simple-food-api-dishes.yaml#/paths/~1dishes~1search'
+  /measures:
+    $ref: 'spec-simple-food-api-measures.yaml#/paths/~1measures'
+  /measures/{id}:
+    $ref: 'spec-simple-food-api-measures.yaml#/paths/~1measures~1{id}'
+  /measures/by-code/{code}:
+    $ref: 'spec-simple-food-api-measures.yaml#/paths/~1measures~1by-code~1{code}'
+components:
+  schemas:
+    Product:
+      $ref: './spec-simple-food-api-products.yaml#/components/schemas/Product'
+
+    Dish:
+      $ref: './spec-simple-food-api-dishes.yaml#/components/schemas/Dish'
+
+

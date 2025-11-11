@@ -11,6 +11,7 @@ import measuresService, {
   UpdateMeasureRequest,
 } from '@/lib/services/measures-service';
 import { ApiError } from '@/lib/api-client';
+import type { MeasureDetail } from '@/types/measures';
 
 export interface ActionResult<T = void> {
   success: boolean;
@@ -23,7 +24,7 @@ export interface ActionResult<T = void> {
  */
 export const createMeasureAction = async (
   data: CreateMeasureRequest
-): Promise<ActionResult> => {
+): Promise<ActionResult<MeasureDetail>> => {
   try {
     const measure = await measuresService.createMeasure(data);
     revalidatePath('/admin/measures');
@@ -51,7 +52,7 @@ export const createMeasureAction = async (
 export const updateMeasureAction = async (
   id: string,
   data: UpdateMeasureRequest
-): Promise<ActionResult> => {
+): Promise<ActionResult<MeasureDetail>> => {
   try {
     const measure = await measuresService.updateMeasure(id, data);
     revalidatePath('/admin/measures');

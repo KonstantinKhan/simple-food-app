@@ -1,0 +1,24 @@
+---
+description: Before starting any new task, the agen MUST ALWAYS first read and consult the CLAUDE.md file to understand the overall project context, goals, achitecture, and specific guidelines.
+This file contains the supreme project constitution and must be prioritized in all planning and coding activities.
+alwaysApply: true
+---
+# Mandatory Consultation of CLAUDE.md
+
+## Critical Rules
+- **ALWAYS** read the `CLAUDE.md` file at the very beginning of a new chat or task, before making any plans or writing any code.
+- Use the information in `CLAUDE.md` as the primary source of truth for project structure, coding conventions, architecture decisions, and development workflows.
+- Any instructions in `CLAUDE.md` override other project rules unless explicitly stated otherwise.
+- If there's a conflict between `CLAUDE.md` and other documentation, always defer to `CLAUDE.md`.
+
+## How to Reference
+- Use the command `@CLAUDE.md` to explicitly reference the file in your chat to ensure it is loaded into the context.
+- After reading `CLAUDE.md`, confirm your understanding by summarizing the key constraints or patterns relevant to the current task.
+
+<example>
+**User Request:** "Add a new API endpoint for user profiles"
+
+**Agent Behavior:**
+1. First, reads `CLAUDE.md` to understand the project's API conventions, authentication requirements, and data models.
+2. Then, proceeds to design and implement the endpoint according to the patterns found in `CLAUDE.md`.
+</example>

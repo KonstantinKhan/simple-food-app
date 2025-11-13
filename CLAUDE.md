@@ -14,3 +14,5 @@ The guide for llm to work with Simple Food App.
 
 ## Development
 - Arrow function are used when creating React components
+
+## UI/UX

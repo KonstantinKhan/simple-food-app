@@ -31,10 +31,10 @@ const MeasuresPage = async () => {
     : availableLocales[0] || 'en';
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-5xl flex-col gap-8 py-16 px-8 bg-white dark:bg-black">
+    <main className="min-h-screen w-full bg-white dark:bg-black">
+      <div className="p-8">
         {error && (
-          <div className="rounded-lg bg-red-50 p-4 text-red-800 dark:bg-red-900/20 dark:text-red-200">
+          <div className="rounded-lg bg-red-50 p-4 text-red-800 dark:bg-red-900/20 dark:text-red-200 mb-6">
             <p className="font-semibold">Error loading measures</p>
             <p className="text-sm mt-1">{error}</p>
           </div>
@@ -44,8 +44,8 @@ const MeasuresPage = async () => {
           availableLocales={availableLocales}
           defaultLocale={defaultLocale}
         />
-      </main>
-    </div>
+      </div>
+    </main>
   );
 };
 

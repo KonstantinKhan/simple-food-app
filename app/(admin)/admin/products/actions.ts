@@ -8,6 +8,7 @@
 import { revalidatePath } from 'next/cache';
 import productsService from '@/lib/services/products-service';
 import { ApiError } from '@/lib/api-client';
+import { getAuthorFromEnv } from '@/lib/utils/author';
 import type { Product, ProductCreateRequest } from '@/types/products';
 
 export interface ActionResult<T = void> {
@@ -23,7 +24,13 @@ export const createProductAction = async (
   data: ProductCreateRequest
 ): Promise<ActionResult<Product>> => {
   try {
-    const product = await productsService.createProduct(data);
+    // Add author from environment variables if not already provided
+    const productData: ProductCreateRequest = {
+      ...data,
+      author: data.author || getAuthorFromEnv(),
+    };
+
+    const product = await productsService.createProduct(productData);
     revalidatePath('/admin/products');
     return {
       success: true,
@@ -38,7 +45,7 @@ export const createProductAction = async (
     }
     return {
       success: false,
-      error: 'Failed to create product. Please try again.',
+      error: error instanceof Error ? error.message : 'Failed to create product. Please try again.',
     };
   }
 };

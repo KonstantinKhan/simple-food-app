@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-The main document for Simple Food App development.
+The guide for llm to work with Simple Food App.
 
 ## Tech stack
 - Next.js / React
